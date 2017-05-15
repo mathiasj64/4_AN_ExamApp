@@ -39,7 +39,7 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
                         "VALUES ('" + locationName + "', '" + latitude + "', '" + longitude + "')")
     }
 
-    fun SQLGetLocation(db: SQLiteDatabase) : String {x
+    fun SQLGetLocation(db: SQLiteDatabase) : String {
 
         var locationID : String = ""
 
