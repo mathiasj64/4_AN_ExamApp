@@ -18,62 +18,74 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
         //message.text = "A Kotlin Activity"
 
-
         buttonCreateTable.setOnClickListener {
             toast("Table created")
             createTable()
-
-        buttonAddLocation.setOnClickListener {
-                addLocation()
-            }
-
-        buttonGetLocations.setOnClickListener {
-            getLocations()
         }
 
-
+        buttonAddLocation.setOnClickListener {
+            addLocation()
         }
     }
 
     fun createTable() {
         Log.d("DebugDatabase", "DebugDatabaseAddress" + DebugDB.getAddressLog())
 
-        val DBCtrl : DBController = DBController.instance
+        val DBCtrl: DBController = DBController.instance
 
         val DB = DBCtrl.getWritableDatabase()
 
         DBCtrl.SQLcreateTable(DB)
+
+        updateList()
+        //UPDATEMAP
     }
 
     fun addLocation() {
         Log.d("DebugDatabase", "DebugDatabaseAddress" + DebugDB.getAddressLog())
 
-        val DBCtrl : DBController = DBController.instance
+        val DBCtrl: DBController = DBController.instance
 
         val DB = DBCtrl.getWritableDatabase()
 
         var locationNameString: String = inputLocationName.getText().toString()
 
-        var latitudeString: String = inputLocationName.getText().toString()
+        var latitudeString: String = inputLatitude.getText().toString()
 
-        var longtitudeString: String = inputLongitude.getText().toString()
+        var longitudeString: String = inputLongitude.getText().toString()
 
         //Kotlins koncatenation er bedre end Javas
-        toast("Name: $locationNameString Latitude: $latitudeString Longitude: $longtitudeString")
+        toast("Name: $locationNameString Latitude: $latitudeString Longitude: $longitudeString")
 
-        DBCtrl.SQLaddLocation(DB, locationNameString, latitudeString, longtitudeString)
+        DBCtrl.SQLaddLocation(DB, locationNameString, latitudeString, longitudeString)
+
+        updateList()
+        //UPDATEMAP
     }
 
-    fun getLocations() {
+    /*fun getLocations() {
         Log.d("DebugDatabase", "DegubDatabaseAddress" + DebugDB.getAddressLog())
 
-        val DBCtrl : DBController = DBController.instance
+        val DBCtrl: DBController = DBController.instance
 
         val DB = DBCtrl.getReadableDatabase()
 
         toast("testGET")
 
         textLocations.setText(DBCtrl.SQLGetLocation(DB))
+
+        updateList()
+        //UPDATEMAP
+    }*/
+
+    fun updateList() {
+        val DBCtrl: DBController = DBController.instance
+
+        Log.d("DBController", "DBController test")
+
+        Log.d("DBController", DBCtrl.getAdapterLocations().toString())
+
+        listView1.adapter = LocationAdapter(DBCtrl.getAdapterLocations())
     }
 
-    }
+}
