@@ -29,12 +29,17 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
     fun SQLcreateTable(db: SQLiteDatabase) {
 
         //Man kan også bruge ContentValues og db.insert()
+        db.createTable("locations", true,
+                "locationID" to INTEGER + PRIMARY_KEY,
+                "locationName" to TEXT,
+                "latitude" to TEXT,
+                "longitude" to TEXT)
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS locations (" +
+        /*db.execSQL("CREATE TABLE IF NOT EXISTS locations (" +
                 "locationID     INTEGER     PRIMARY KEY," +
                 "locationName   CHAR(50)," +
                 "latitude       TEXT," +
-                "longitude      TEXT" + ")")
+                "longitude      TEXT" + ")")*/
     }
 
     fun SQLaddLocation(db: SQLiteDatabase, locationName: String, latitude: String, longitude: String) {

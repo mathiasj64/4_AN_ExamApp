@@ -44,6 +44,6 @@ class LocationAdapter(var listLocation: List<Map<String, Any?>>) : BaseAdapter()
     }
 
     override fun getItemId(position: Int): Long {
-        return getItem(position).get("petID") as Long;
+        return getItem(position).get("locationID") as Long;
     }
 }
