@@ -16,76 +16,24 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //message.text = "A Kotlin Activity"
 
-        buttonCreateTable.setOnClickListener {
-            toast("Table created")
-            createTable()
+        if (savedInstanceState == null)
+        {
+            fragmentManager.beginTransaction().replace(R.id.contentFrame, MapFragment()).commit()
         }
 
-        buttonAddLocation.setOnClickListener {
-            addLocation()
-        }
+        goToMap.setOnClickListener { replaceWithMap() }
+        goToList.setOnClickListener { replaceWithList() }
+
     }
 
-    fun createTable() {
-        Log.d("DebugDatabase", "DebugDatabaseAddress" + DebugDB.getAddressLog())
-
-        val DBCtrl: DBController = DBController.instance
-
-        val DB = DBCtrl.getWritableDatabase()
-
-        DBCtrl.SQLcreateTable(DB)
-
-        updateList()
-        //UPDATEMAP
+    fun replaceWithList()
+    {
+        fragmentManager.beginTransaction().replace(R.id.contentFrame, ListFragment()).commit()
     }
 
-    fun addLocation() {
-        Log.d("DebugDatabase", "DebugDatabaseAddress" + DebugDB.getAddressLog())
-
-        val DBCtrl: DBController = DBController.instance
-
-        val DB = DBCtrl.getWritableDatabase()
-
-        var locationNameString: String = inputLocationName.getText().toString()
-
-        var latitudeString: String = inputLatitude.getText().toString()
-
-        var longitudeString: String = inputLongitude.getText().toString()
-
-        //Kotlins koncatenation er bedre end Javas
-        toast("Name: $locationNameString Latitude: $latitudeString Longitude: $longitudeString")
-
-        DBCtrl.SQLaddLocation(DB, locationNameString, latitudeString, longitudeString)
-
-        updateList()
-        //UPDATEMAP
-    }
-
-    /*fun getLocations() {
-        Log.d("DebugDatabase", "DegubDatabaseAddress" + DebugDB.getAddressLog())
-
-        val DBCtrl: DBController = DBController.instance
-
-        val DB = DBCtrl.getReadableDatabase()
-
-        toast("testGET")
-
-        textLocations.setText(DBCtrl.SQLGetLocation(DB))
-
-        updateList()
-        //UPDATEMAP
-    }*/
-
-    fun updateList() {
-        val DBCtrl: DBController = DBController.instance
-
-        Log.d("DBController", "DBController test")
-
-        Log.d("DBController", DBCtrl.getAdapterLocations().toString())
-
-        listView1.adapter = LocationAdapter(DBCtrl.getAdapterLocations())
+    fun replaceWithMap() {
+        fragmentManager.beginTransaction().replace(R.id.contentFrame, MapFragment()).commit()
     }
 
 }
