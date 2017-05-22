@@ -55,4 +55,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val Virum = CameraPosition.builder().target(LatLng(55.794614, 12.461796)).zoom(16F).bearing(0F).tilt(0F).build()
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Virum))
     }
+
+    fun createPin(name: String, lat: Double, long: Double) {
+
+        mGoogleMap!!.addMarker(MarkerOptions().position(LatLng(lat, long)).title(name))
+    }
+
+
+
 }

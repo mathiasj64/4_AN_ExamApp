@@ -8,11 +8,11 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.location_list.*
 
 
+
 /**
  * Created by Mathias on 16-05-2017.
  */
 class LocationAdapter(var listLocation: List<Map<String, Any?>>) : BaseAdapter() {
-
 
 
     override fun getView(position: Int, view: View?, viewgroup: ViewGroup): View {

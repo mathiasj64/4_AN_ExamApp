@@ -17,6 +17,9 @@ import org.jetbrains.anko.toast
 
 class ListFragment : Fragment()
 {
+
+    var mapFragment = MapFragment()
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -70,6 +73,8 @@ class ListFragment : Fragment()
         DBCtrl.SQLaddLocation(DB, locationNameString, latitudeString, longitudeString)
 
         updateList()
+
+        addPin(locationNameString, latitudeString.toDouble(), longitudeString.toDouble())
         //UPDATEMAP
     }
 
@@ -81,5 +86,9 @@ class ListFragment : Fragment()
         Log.d("DBController", DBCtrl.getAdapterLocations().toString())
 
         listView1.adapter = LocationAdapter(DBCtrl.getAdapterLocations())
+    }
+
+    fun addPin(locationName: String, latitude: Double, longitude: Double) {
+        mapFragment.createPin(locationName, latitude, longitude)
     }
 }
