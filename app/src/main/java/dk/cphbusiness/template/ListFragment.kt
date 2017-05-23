@@ -64,6 +64,28 @@ class ListFragment : Fragment() {
     fun addLocation() {
         Log.d("DebugDatabase", "DebugDatabaseAddress" + DebugDB.getAddressLog())
 
+        if (locationManager == null) {
+            //Måske tilføæj applicationcontext
+            locationManager = App.instance.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        }
+
+        var locationName: String = inputLocationName.getText().toString()
+
+        var latitude: String = ""
+
+        var longitude: String = ""
+
+
+        if (locationManager!!.getLastKnownLocation("gps") == null) {
+            val loc = locationManager!!.getLastKnownLocation("network")
+            latitude = loc.latitude.toString()
+            longitude = loc.longitude.toString()
+        } else {
+            val loc = locationManager!!.getLastKnownLocation("gps")
+            latitude = loc.latitude.toString()
+            longitude = loc.longitude.toString()
+        }
+
         val DBCtrl: DBController = DBController.instance
 
         var locationNameString: String = inputLocationName.getText().toString()
@@ -73,9 +95,9 @@ class ListFragment : Fragment() {
         var longitudeString: String = inputLongitude.getText().toString()
 
         //Kotlins koncatenation er bedre end Javas
-        toast("Name: $locationNameString Latitude: $latitudeString Longitude: $longitudeString")
+        toast("Name: $locationName Latitude: $latitude Longitude: $longitude")
 
-        DBCtrl.SQLaddLocation(locationNameString, latitudeString, longitudeString)
+        DBCtrl.SQLaddLocation(locationName, latitude, longitude)
 
 
 
@@ -123,7 +145,6 @@ class ListFragment : Fragment() {
             val loc = locationManager!!.getLastKnownLocation("network")
             textViewOnce.text = (loc.longitude.toString() + ". " + loc.latitude + loc.provider).toString()
         } else {
-
             val loc2 = locationManager!!.getLastKnownLocation("gps")
             textViewOnce.text = (loc2.longitude.toString() + ". " + loc2.latitude + loc2.provider).toString()
         }
