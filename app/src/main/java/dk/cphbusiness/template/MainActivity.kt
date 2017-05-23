@@ -20,15 +20,17 @@ import org.jetbrains.anko.toast
 class MainActivity : Activity() {
 
     //var locationManager: LocationManager? = null
+    val db = DBController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main)
+        db.SQLcreateTable()
 
         if (savedInstanceState == null)
         {
-            fragmentManager.beginTransaction().replace(R.id.contentFrame, ListFragment()).commit()
+            fragmentManager.beginTransaction().replace(R.id.contentFrame, MapFragment()).commit()
         }
 
         Log.d("permissiontest", "" + App.permissionGranted)
