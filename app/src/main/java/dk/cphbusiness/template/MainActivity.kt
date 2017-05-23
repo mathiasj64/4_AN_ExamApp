@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.amitshekhar.DebugDB
-import kotlinx.android.synthetic.main.activity_java.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_list.*
 import org.jetbrains.anko.onClick
