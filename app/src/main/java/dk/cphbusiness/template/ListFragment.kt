@@ -10,6 +10,7 @@ import com.amitshekhar.DebugDB
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_list.*
 import org.jetbrains.anko.toast
+import dk.cphbusiness.template.MapFragment
 
 /**
  * Created by Philip on 18-05-2017.
@@ -17,12 +18,17 @@ import org.jetbrains.anko.toast
 
 class ListFragment : Fragment()
 {
+
+    val map = MapFragment()
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+
+        createTable()
         buttonCreateTable.setOnClickListener {
             toast("Table created")
             createTable()
@@ -43,9 +49,8 @@ class ListFragment : Fragment()
 
         val DBCtrl: DBController = DBController.instance
 
-        val DB = DBCtrl.getWritableDatabase()
 
-        DBCtrl.SQLcreateTable(DB)
+        DBCtrl.SQLcreateTable()
 
         updateList()
         //UPDATEMAP
@@ -56,8 +61,6 @@ class ListFragment : Fragment()
 
         val DBCtrl: DBController = DBController.instance
 
-        val DB = DBCtrl.getWritableDatabase()
-
         var locationNameString: String = inputLocationName.getText().toString()
 
         var latitudeString: String = inputLatitude.getText().toString()
@@ -67,7 +70,9 @@ class ListFragment : Fragment()
         //Kotlins koncatenation er bedre end Javas
         toast("Name: $locationNameString Latitude: $latitudeString Longitude: $longitudeString")
 
-        DBCtrl.SQLaddLocation(DB, locationNameString, latitudeString, longitudeString)
+        DBCtrl.SQLaddLocation(locationNameString, latitudeString, longitudeString)
+
+
 
         updateList()
         //UPDATEMAP
@@ -82,4 +87,10 @@ class ListFragment : Fragment()
 
         listView1.adapter = LocationAdapter(DBCtrl.getAdapterLocations())
     }
+
+    /*fun updateMap(locationName: String, latitude: Double, longitude: Double) {
+
+        map.updateMap()
+    }*/
+
 }

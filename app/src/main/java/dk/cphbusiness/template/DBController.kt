@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import org.jetbrains.anko.db.*
+import java.util.*
 
 class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelper(context, DBController.DB_NAME, null, DBController.DB_VERSION) {
 
@@ -26,9 +27,12 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
     override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
     }
 
-    fun SQLcreateTable(db: SQLiteDatabase) {
+    fun SQLcreateTable() {
 
-        //Man kan også bruge ContentValues og db.insert()
+        //Man kan også bruge ContentValues
+
+        db = readableDatabase
+
         db.createTable("locations", true,
                 "locationID" to INTEGER + PRIMARY_KEY,
                 "locationName" to TEXT,
@@ -42,29 +46,38 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
                 "longitude      TEXT" + ")")*/
     }
 
-    fun SQLaddLocation(db: SQLiteDatabase, locationName: String, latitude: String, longitude: String) {
-        db.execSQL(
+    fun SQLaddLocation(locationName: String, latitude: String, longitude: String) {
+        db = readableDatabase
+                db.execSQL(
                 "INSERT INTO locations (locationName, latitude, longitude)" +
                         "VALUES ('" + locationName + "', '" + latitude + "', '" + longitude + "')")
     }
 
-    //SLET
-/*    fun SQLGetLocation(db: SQLiteDatabase) : String {
+    fun getLocationList() : MutableList<Location> {
 
-        var locationID : String = ""
+        db = readableDatabase
 
-        var c : Cursor = db.rawQuery("SELECT locationID, locationName, latitude, longitude FROM locations", null)
+        val list = mutableListOf<Location>()
+
+        var c : Cursor = db.rawQuery("SELECT locationName, latitude, longitude FROM locations", null)
 
         if(c.moveToFirst()){
             while (c.moveToNext()) {
-                locationID += c.getString(0)
-                locationID += c.getString(1)
-                locationID += c.getString(2)
-                locationID += c.getString(3)
+                list.add(Location(c.getString(0), c.getString(1).toDouble(), c.getString(2).toDouble()))
             }
         }
-        return locationID
-    }*/
+        return list
+    }
+
+    fun testPin() :  MutableList<Location> {
+
+
+        val list = mutableListOf<Location>()
+
+        list.add(Location("hej", 10.0, 10.0))
+
+        return list
+    }
 
     fun getAdapterLocations(): List<Map<String, Any?>> {
 

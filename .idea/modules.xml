@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/4_AN_ExamApp.iml" filepath="$PROJECT_DIR$/4_AN_ExamApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/SQLite.iml" filepath="$PROJECT_DIR$/SQLite.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/fragments.iml" filepath="$PROJECT_DIR$/fragments.iml" />
     </modules>
   </component>

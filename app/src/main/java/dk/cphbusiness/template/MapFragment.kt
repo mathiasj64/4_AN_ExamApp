@@ -21,6 +21,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     internal var mGoogleMap: GoogleMap? = null
     internal var mMapView: MapView? = null
     internal var mView: View? = null
+    var DBController = DBController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,5 +55,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         googleMap.addMarker(MarkerOptions().position(LatLng(55.794614, 12.461796)).title("Virum").snippet("2830 SWAG"))
         val Virum = CameraPosition.builder().target(LatLng(55.794614, 12.461796)).zoom(16F).bearing(0F).tilt(0F).build()
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Virum))
+
+
+        var locList : MutableList<Location> = DBController.getLocationList()
+
+        for(i in locList) {
+            googleMap.addMarker(MarkerOptions().position(LatLng(i.latitude, i.longitude)).title(i.name).snippet("2830 SWAG"))
+        }
+
+
     }
 }

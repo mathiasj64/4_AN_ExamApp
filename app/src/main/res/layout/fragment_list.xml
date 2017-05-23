@@ -41,6 +41,16 @@
             android:text="Location Name" />
 
         <EditText
+            android:id="@+id/inputLatitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inputLocationName"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="50" />
+
+        <EditText
             android:id="@+id/inputLongitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,17 +59,19 @@
             android:layout_below="@+id/inputLatitude"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Longitude" />
+            android:text="100" />
 
-        <EditText
-            android:id="@+id/inputLatitude"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/buttonOnce"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/inputLocationName"
-            android:layout_centerHorizontal="true"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Latitude" />
+            android:text="Button" />
+
+        <TextView
+            android:id="@+id/textViewOnce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
         <ListView
             android:id="@+id/listView1"
