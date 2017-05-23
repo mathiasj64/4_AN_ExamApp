@@ -1,6 +1,8 @@
 package dk.cphbusiness.template
 
 import android.app.Fragment
+import android.content.Context
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,8 +18,9 @@ import dk.cphbusiness.template.MapFragment
  * Created by Philip on 18-05-2017.
  */
 
-class ListFragment : Fragment()
-{
+class ListFragment : Fragment() {
+
+    var locationManager: LocationManager? = null
 
     val map = MapFragment()
 
@@ -37,6 +40,8 @@ class ListFragment : Fragment()
         buttonAddLocation.setOnClickListener {
             addLocation()
         }
+
+        initFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
@@ -92,5 +97,37 @@ class ListFragment : Fragment()
 
         map.updateMap()
     }*/
+
+    fun initFragment () {
+        if(App.permissionGranted == true) {
+            configureButton()
+        }
+        else {
+            buttonOnce.text = "Location permission not granted"
+        }
+    }
+
+    //På klik køres metoden der printer lokation ud
+    private fun configureButton() {
+        buttonOnce.setOnClickListener { getLocationOnce() }
+    }
+
+    private fun getLocationOnce() {
+
+        if (locationManager == null) {
+            //Måske tilføæj applicationcontext
+            locationManager = App.instance.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        }
+
+        if (locationManager!!.getLastKnownLocation("gps") == null) {
+            val loc = locationManager!!.getLastKnownLocation("network")
+            textViewOnce.text = (loc.longitude.toString() + ". " + loc.latitude + loc.provider).toString()
+        } else {
+
+            val loc2 = locationManager!!.getLastKnownLocation("gps")
+            textViewOnce.text = (loc2.longitude.toString() + ". " + loc2.latitude + loc2.provider).toString()
+        }
+
+    }
 
 }

@@ -19,13 +19,26 @@ import org.jetbrains.anko.toast
 
 class MainActivity : Activity() {
 
-    var locationManager: LocationManager? = null
+    //var locationManager: LocationManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (savedInstanceState == null)
+        {
+            fragmentManager.beginTransaction().replace(R.id.contentFrame, MapFragment()).commit()
+        }
+
+        Log.d("permissiontest", "" + App.permissionGranted)
+        App.permissionGranted = true
+        Log.d("permissiontest", "" + App.permissionGranted)
+
+        goToMap.setOnClickListener { replaceWithMap() }
+        goToList.setOnClickListener { replaceWithList() }
+
         //Tjekker og requester adgang til location service
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //Hvis FINE og COARSE adgang ikke er givet bliver det requested. Hvis man får adgang bliver configureButton metoden kørt, som sætter en onClickListener på knappen.
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -33,18 +46,15 @@ class MainActivity : Activity() {
                 requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET), 10)
                 //Dette kalder onRequestPermissionResult
                 return
+            } else {
+                App.permissionGranted = true
+                //configureButton()
             }
-        } else {
-            configureButton()
         }
 
-        if (savedInstanceState == null)
-        {
-            fragmentManager.beginTransaction().replace(R.id.contentFrame, MapFragment()).commit()
-        }
+        Log.d("denytest", "" + App.permissionGranted)
 
-        goToMap.setOnClickListener { replaceWithMap() }
-        goToList.setOnClickListener { replaceWithList() }
+
 
     }
 
@@ -54,18 +64,19 @@ class MainActivity : Activity() {
             10 -> {
                 //Hvis der er givet adgang kører vi configureButton som giver knappen en onClickListener.
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    configureButton()
+                    //configureButton()
+                    App.permissionGranted = true
                 return
             }
         }
     }
 
     //På klik køres metoden der printer lokation ud
-    private fun configureButton() {
+    /*private fun configureButton() {
         buttonOnce.setOnClickListener { getLocationOnce() }
-    }
+    }*/
 
-    private fun getLocationOnce() {
+    /*private fun getLocationOnce() {
 
         if (locationManager == null) {
             locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -80,7 +91,7 @@ class MainActivity : Activity() {
             textViewOnce.text = (loc2.longitude.toString() + ". " + loc2.latitude + loc2.provider).toString()
         }
 
-    }
+    }*/
 
     fun replaceWithList()
     {
