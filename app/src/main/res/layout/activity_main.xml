@@ -45,9 +45,9 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/goToList"
+        android:layout_alignBaseline="@+id/goToMap"
+        android:layout_alignBottom="@+id/goToMap"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp"
-        android:text="Ornli syg activity" />
+        android:text="My Favourite Places" />
 
 </RelativeLayout>

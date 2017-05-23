@@ -52,15 +52,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         mGoogleMap = googleMap
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL)
-        googleMap.addMarker(MarkerOptions().position(LatLng(55.794614, 12.461796)).title("Virum").snippet("2830 SWAG"))
-        val Virum = CameraPosition.builder().target(LatLng(55.794614, 12.461796)).zoom(16F).bearing(0F).tilt(0F).build()
+        googleMap.addMarker(MarkerOptions().position(LatLng(55.769942, 12.511579)).title("CPH Business Academy").snippet("Min skole"))
+        val Virum = CameraPosition.builder().target(LatLng(55.794614, 12.461796)).zoom(5F).bearing(0F).tilt(0F).build()
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Virum))
 
 
         var locList : MutableList<Location> = DBController.getLocationList()
 
         for(i in locList) {
-            googleMap.addMarker(MarkerOptions().position(LatLng(i.latitude, i.longitude)).title(i.name).snippet("2830 SWAG"))
+            googleMap.addMarker(MarkerOptions().position(LatLng(i.latitude, i.longitude)).title(i.name))
         }
 
 
