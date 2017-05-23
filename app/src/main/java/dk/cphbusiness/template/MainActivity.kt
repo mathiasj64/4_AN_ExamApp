@@ -28,7 +28,7 @@ class MainActivity : Activity() {
 
         if (savedInstanceState == null)
         {
-            fragmentManager.beginTransaction().replace(R.id.contentFrame, MapFragment()).commit()
+            fragmentManager.beginTransaction().replace(R.id.contentFrame, ListFragment()).commit()
         }
 
         Log.d("permissiontest", "" + App.permissionGranted)
