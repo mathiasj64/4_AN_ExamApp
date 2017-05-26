@@ -3,9 +3,7 @@ package dk.cphbusiness.template
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.util.Log
 import org.jetbrains.anko.db.*
-import java.util.*
 
 class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelper(context, DBController.DB_NAME, null, DBController.DB_VERSION) {
 
@@ -14,7 +12,8 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
     companion object {
         val DB_NAME = "TESTDB2"
         val DB_VERSION = 1
-        val instance by lazy { DBController()
+        val instance by lazy {
+            DBController()
         }
     }
 
@@ -48,20 +47,20 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
 
     fun SQLaddLocation(locationName: String, latitude: String, longitude: String) {
         db = readableDatabase
-                db.execSQL(
+        db.execSQL(
                 "INSERT INTO locations (locationName, latitude, longitude)" +
                         "VALUES ('" + locationName + "', '" + latitude + "', '" + longitude + "')")
     }
 
-    fun getLocationList() : MutableList<Location> {
+    fun getLocationList(): MutableList<Location> {
 
         db = readableDatabase
 
         val list = mutableListOf<Location>()
 
-        var c : Cursor = db.rawQuery("SELECT locationName, latitude, longitude FROM locations", null)
+        var c: Cursor = db.rawQuery("SELECT locationName, latitude, longitude FROM locations", null)
 
-        if(c.moveToFirst()){
+        if (c.moveToFirst()) {
             while (c.moveToNext()) {
                 list.add(Location(c.getString(0), c.getString(1).toDouble(), c.getString(2).toDouble()))
             }
@@ -69,21 +68,11 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
         return list
     }
 
-    fun testPin() :  MutableList<Location> {
-
-
-        val list = mutableListOf<Location>()
-
-        list.add(Location("hej", 10.0, 10.0))
-
-        return list
-    }
-
     fun getAdapterLocations(): List<Map<String, Any?>> {
 
         db = readableDatabase
 
-        return db.select("locations").exec() {
+        return db.select("locations").exec {
             parseList(
                     object : MapRowParser<Map<String, Any?>> {
                         override fun parseRow(columns: Map<String, Any?>): Map<String, Any?> {
@@ -91,8 +80,6 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
                         }
                     })
         }
-
-        db.close()
     }
 
 }

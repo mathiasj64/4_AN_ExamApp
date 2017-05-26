@@ -37,7 +37,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
 
         // mView!! betyder at mView ikke må returneres som null
-
         mMapView = mView!!.findViewById(R.id.map) as MapView
         if (mMapView != null) {
             mMapView!!.onCreate(null)
@@ -52,11 +51,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         mGoogleMap = googleMap
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL)
+
+        //Sætter en nål ved skolen
         googleMap.addMarker(MarkerOptions().position(LatLng(55.769942, 12.511579)).title("CPH Business Academy").snippet("Min skole"))
-        val Virum = CameraPosition.builder().target(LatLng(55.794614, 12.461796)).zoom(5F).bearing(0F).tilt(0F).build()
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Virum))
 
+        //Sætter kameraet til at starte ved nålen med den rigtige zoom.
+        val Skolen = CameraPosition.builder().target(LatLng(55.769942, 12.511579)).zoom(12F).bearing(0F).tilt(0F).build()
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Skolen))
 
+        //Looper igennem alle lokationer i databasen og sætter en nål for hver lokation i databasen.
         var locList : MutableList<Location> = DBController.getLocationList()
 
         for(i in locList) {
