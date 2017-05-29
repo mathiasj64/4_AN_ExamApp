@@ -10,7 +10,7 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
     lateinit var db: SQLiteDatabase
 
     companion object {
-        val DB_NAME = "TESTDB2"
+        val DB_NAME = "LocationDB"
         val DB_VERSION = 1
         val instance by lazy {
             DBController()
@@ -50,6 +50,13 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
         db.execSQL(
                 "INSERT INTO locations (locationName, latitude, longitude)" +
                         "VALUES ('" + locationName + "', '" + latitude + "', '" + longitude + "')")
+    }
+
+    fun SQLdeleteLocations() {
+        db = readableDatabase
+        db.execSQL(
+                "DELETE from locations"
+        )
     }
 
     fun getLocationList(): MutableList<Location> {

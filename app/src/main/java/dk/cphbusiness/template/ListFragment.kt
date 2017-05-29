@@ -35,6 +35,12 @@ class ListFragment : Fragment() {
         createTable()
 
         initFragment()
+
+        buttonDeleteLocations.setOnClickListener {
+            val DBCtrl: DBController = DBController.instance
+            DBCtrl.SQLdeleteLocations()
+            updateList()
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
