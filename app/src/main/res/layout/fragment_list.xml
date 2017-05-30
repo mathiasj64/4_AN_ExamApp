@@ -36,7 +36,7 @@
             android:layout_below="@+id/buttonCreateTable"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Location Name" />
+            android:hint="Location Name" />
 
         <ListView
             android:id="@+id/listView1"

@@ -38,6 +38,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         // mView!! betyder at mView ikke må returneres som null
         mMapView = mView!!.findViewById(R.id.map) as MapView
+
+        //MapView viser et kort med data fra GoogleMaps service
         if (mMapView != null) {
             mMapView!!.onCreate(null)
             mMapView!!.onResume()
@@ -50,7 +52,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         MapsInitializer.initialize(context)
 
         mGoogleMap = googleMap
-        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL)
+        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID)
 
         //Sætter en nål ved skolen
         googleMap.addMarker(MarkerOptions().position(LatLng(55.769942, 12.511579)).title("CPH Business Academy").snippet("Min skole"))

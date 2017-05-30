@@ -17,7 +17,7 @@ import org.jetbrains.anko.toast
 
 class MainActivity : Activity() {
 
-    val db = DBController()
+    val dbc = DBController()
     var locationManager: LocationManager? = null
     private var locationListener: LocationListener? = null
 
@@ -28,10 +28,11 @@ class MainActivity : Activity() {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main)
 
-        db.SQLcreateTable()
+        dbc.SQLcreateTable()
 
         if (savedInstanceState == null)
         {
+            //MapFragment bliver sat ind på FrameLayout
             fragmentManager.beginTransaction().replace(R.id.contentFrame, MapFragment()).commit()
         }
 

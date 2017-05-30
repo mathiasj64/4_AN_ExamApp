@@ -22,15 +22,11 @@ class ListFragment : Fragment() {
 
     val mainActivity = MainActivity()
 
-    val map = MapFragment()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-
-        locationManager = mainActivity.locationManager
 
         createTable()
 
@@ -70,7 +66,8 @@ class ListFragment : Fragment() {
         var longitude: String
         var latitude: String
 
-
+        //Tjekker om der ikke er nogen lokation fra GPS-provideren.
+        //(Der burde altid være en, da vi requester en ny lokation hvert sekund i locationListeneren)
         if (locationManager!!.getLastKnownLocation("gps") == null) {
             val loc = locationManager!!.getLastKnownLocation("network")
             latitude = loc.latitude.toString()
@@ -84,9 +81,10 @@ class ListFragment : Fragment() {
         val DBCtrl: DBController = DBController.instance
 
         //Kotlins koncatenation er bedre end Javas
-        toast("Added: $locationName!")
 
         DBCtrl.SQLaddLocation(locationName, latitude, longitude)
+
+        toast("Added: $locationName!")
 
         updateList()
     }

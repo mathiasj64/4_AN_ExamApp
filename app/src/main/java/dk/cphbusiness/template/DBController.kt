@@ -6,11 +6,12 @@ import android.database.sqlite.SQLiteDatabase
 import org.jetbrains.anko.db.*
 
 class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelper(context, DBController.DB_NAME, null, DBController.DB_VERSION) {
+    //Extender en abstrakt klasse som har nogle metoder
 
     lateinit var db: SQLiteDatabase
 
     companion object {
-        val DB_NAME = "LocationDB"
+        val DB_NAME = "TESTDB2"
         val DB_VERSION = 1
         val instance by lazy {
             DBController()
@@ -18,6 +19,7 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
     }
 
     override fun onCreate(db: SQLiteDatabase) {
+        //Her kunne man have kørt SQL der laver tabellerne istedet for i mainActivitys onCreate
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -26,9 +28,8 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
     override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
     }
 
+    //Opretter forbindelse til databasen og laver databasen hvis den ikke allerede er der
     fun SQLcreateTable() {
-
-        //Man kan også bruge ContentValues
 
         db = readableDatabase
 
@@ -37,21 +38,19 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
                 "locationName" to TEXT,
                 "latitude" to TEXT,
                 "longitude" to TEXT)
-
-        /*db.execSQL("CREATE TABLE IF NOT EXISTS locations (" +
-                "locationID     INTEGER     PRIMARY KEY," +
-                "locationName   CHAR(50)," +
-                "latitude       TEXT," +
-                "longitude      TEXT" + ")")*/
     }
 
+    //Tilføjer en lokation til databasen
     fun SQLaddLocation(locationName: String, latitude: String, longitude: String) {
+
+        //Opretter en database eller åbner forbindelse til eksisterende db
         db = readableDatabase
         db.execSQL(
                 "INSERT INTO locations (locationName, latitude, longitude)" +
                         "VALUES ('" + locationName + "', '" + latitude + "', '" + longitude + "')")
     }
 
+    //Sletter alle lokationer i databasen
     fun SQLdeleteLocations() {
         db = readableDatabase
         db.execSQL(
@@ -59,6 +58,8 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
         )
     }
 
+    //Henter alle lokationer ud fra databsen
+    //Bruges til at hente alle lokationer ud til at sætte markører på kortet
     fun getLocationList(): MutableList<Location> {
 
         db = readableDatabase
@@ -75,6 +76,7 @@ class DBController(var context: Context = App.instance) : ManagedSQLiteOpenHelpe
         return list
     }
 
+    //Henter all lokationer så de kan bruges i ListAdapteren til ListView
     fun getAdapterLocations(): List<Map<String, Any?>> {
 
         db = readableDatabase
